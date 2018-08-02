@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<div th:fragment="navbar">
+    <nav class="navbar navbar-default " role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand page-scroll" th:href="@{/home}">Home</a>
+            </div>
+            <div class="collapse  navbar-collapse navbar-ex1-collapse">
+                <ul class="dropdown-menu">
+                    <li><a th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container main">
+    <div class="row">
+        <div class="col-md-6">
+            <form th:action="@{/transfer/otherAccount}" method="post">
+                <div class="form-group" >
+                    <label for="receiverName">Choose receiver:</label>
+                    <select class="form-control" th:value="${receiverName}"  name="receiverName" id="receiverName" required="required">
+                        <option disabled="disabled" selected="selected"> -- select the receiver -- </option>
+                        <option data-th-each="eachReceiver : ${receiverList}" data-th-text="${eachReceiver.name}"></option>
+                    </select>
+                    <br />
+                </div>
+                <div class="form-group">
+                    <label>Amount transfer: </label>
+                    <span class="input-group-addon">Amount $</span>
+                    <input th:value="${amount}" type="text" name="amount" id="amount" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                </div>
+
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+
+                <button class="btn" type="submit">Transfer</button>
+            </form>
+
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

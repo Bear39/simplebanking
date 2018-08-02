@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<div th:fragment="navbar">
+    <nav class="navbar navbar-default " role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand page-scroll" th:href="@{/home}">Home</a>
+            </div>
+            <div class="collapse  navbar-collapse navbar-ex1-collapse">
+                <ul class="dropdown-menu">
+                    <li><a th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container main">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Recipient Information</h3>
+            <form th:action="@{/transfer/addReceiver/save}" method="post">
+                <input type="hidden" name="id" th:value="${receiver.id}" />
+                <div class="form-group">
+                    <label for="receiverName">Username</label>
+                    <input type="text" class="form-control" th:value="${receiver.name}"
+                           name="name" id="receiverName" placeholder="Username"/>
+                </div>
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+
+                <button class="btn" type="submit">Add Receiver</button>
+            </form>
+
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <h3>List of Recipients</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Account Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="eachReceiver : ${receiverList}">
+                    <td><a data-th-text="${eachReceiver.name}">...</td>
+                    <td data-th-text="${eachReceiver.accountNumber}">...</td>
+                    <td><a th:href="@{/transfer/addReceiver/delete?receiverName=}+${eachReceiver.name}">delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
